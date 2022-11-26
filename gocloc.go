@@ -1,4 +1,4 @@
-package gocloc
+package pocloc
 
 // Processor is gocloc analyzing processor.
 type Processor struct {

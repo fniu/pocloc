@@ -1,4 +1,4 @@
-package gocloc
+package pocloc
 
 import (
 	"crypto/md5"
