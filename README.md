@@ -1,4 +1,4 @@
-# pcloc
+# pocloc
 
 A cloc based on `gocloc`, which supports the file formats develeped at [Prover](https://www.prover.com).
 
