@@ -1,3 +1,9 @@
+# pcloc
+
+A cloc based on `gocloc`, which supports the file formats develeped at [Prover](https://www.prover.com).
+
+
+
 # gocloc
 
 [![GoDoc](https://godoc.org/github.com/hhatto/gocloc?status.svg)](https://godoc.org/github.com/hhatto/gocloc)

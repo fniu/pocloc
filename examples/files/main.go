@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/hhatto/gocloc"
+	gocloc "github.com/fniu/pocloc"
 )
 
 func main() {
-	languages := gocloc.NewDefinedLanguages()
+	languages := gocloc.NewDefinedLanguages(false)
 	options := gocloc.NewClocOptions()
 	paths := []string{
 		".",

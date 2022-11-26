@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/hhatto/gocloc"
+	gocloc "github.com/fniu/pocloc"
 	flags "github.com/jessevdk/go-flags"
 )
 
@@ -55,6 +55,7 @@ type CmdOptions struct {
 	SkipDuplicated bool   `long:"skip-duplicated" description:"skip duplicated files"`
 	ShowLang       bool   `long:"show-lang" description:"print about all languages and extensions"`
 	ShowVersion    bool   `long:"version" description:"print version info"`
+	NoColor        bool   `long:"no-color" description:"do not highlight Prover's formats"`
 }
 
 type outputBuilder struct {
@@ -214,7 +215,7 @@ func main() {
 	}
 
 	// value for language result
-	languages := gocloc.NewDefinedLanguages()
+	languages := gocloc.NewDefinedLanguages(!opts.NoColor)
 
 	if opts.ShowVersion {
 		fmt.Printf("%s (%s)\n", Version, GitCommit)

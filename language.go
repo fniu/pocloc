@@ -12,6 +12,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/charmbracelet/lipgloss"
 	enry "github.com/go-enry/go-enry/v2"
 )
 
@@ -54,6 +55,18 @@ func (ls Languages) Less(i, j int) bool {
 
 var reShebangEnv = regexp.MustCompile("^#! *(\\S+/env) ([a-zA-Z]+)")
 var reShebangLang = regexp.MustCompile("^#! *[.a-zA-Z/]+/([a-zA-Z]+)")
+
+func ProverNameRender(name string, enabled bool) string {
+	if !enabled {
+		return name
+	}
+	// This calculation with the magic number 27 is needed to align the column of names correctly.
+	padding := 27 - len(name)
+	proverBlue := lipgloss.AdaptiveColor{Light: "#0532ac", Dark: "#ff9900"}
+	return lipgloss.NewStyle().PaddingRight(padding).Bold(true).
+		Foreground(proverBlue).
+		Render(name)
+}
 
 // Exts is the definition of the language name, keyed by the extension for each language.
 var Exts = map[string]string{
@@ -279,6 +292,13 @@ var Exts = map[string]string{
 	"zep":         "Zephir",
 	"zig":         "Zig",
 	"zsh":         "Zsh",
+	"hll":         "Prover HLL",
+	"shll":        "Prover sHLL",
+	"tm":          "Prover PiSPEC",
+	"seif":        "Prover SEIF",
+	"lcf":         "Prover LCF",
+	"lmc":         "Prover LMC",
+	"rjson":       "Prover RJSON",
 }
 
 var shebang2ext = map[string]string{
@@ -451,8 +471,10 @@ func (langs *DefinedLanguages) GetFormattedString() string {
 	return buf.String()
 }
 
+var pnr = ProverNameRender
+
 // NewDefinedLanguages create DefinedLanguages.
-func NewDefinedLanguages() *DefinedLanguages {
+func NewDefinedLanguages(renderProverFmts bool) *DefinedLanguages {
 	return &DefinedLanguages{
 		Langs: map[string]*Language{
 			"ActionScript":        NewLanguage("ActionScript", []string{"//"}, [][]string{{"/*", "*/"}}),
@@ -617,6 +639,14 @@ func NewDefinedLanguages() *DefinedLanguages {
 			"Zephir":              NewLanguage("Zephir", []string{"//"}, [][]string{{"/*", "*/"}}),
 			"Zig":                 NewLanguage("Zig", []string{"//", "///"}, [][]string{{"", ""}}),
 			"Zsh":                 NewLanguage("Zsh", []string{"#"}, [][]string{{"", ""}}),
+
+			"Prover HLL":    NewLanguage(pnr("Prover HLL", renderProverFmts), []string{"//"}, [][]string{{"/*", "*/"}}),
+			"Prover sHLL":   NewLanguage(pnr("Prover sHLL", renderProverFmts), []string{"//"}, [][]string{{"/*", "*/"}}),
+			"Prover PiSPEC": NewLanguage(pnr("Prover PiSPEC", renderProverFmts), []string{"//"}, [][]string{{"\"\"\"", "\"\"\""}}),
+			"Prover SEIF":   NewLanguage(pnr("Prover SEIF", renderProverFmts), []string{"//"}, [][]string{{"/*", "*/"}}),
+			"Prover LCF":    NewLanguage(pnr("Prover LCF", renderProverFmts), []string{"#"}, [][]string{{"", ""}}),
+			"Prover LMC":    NewLanguage(pnr("Prover LMC", renderProverFmts), []string{"#"}, [][]string{{"", ""}}),
+			"Prover RJSON":  NewLanguage(pnr("Prover RJSON", renderProverFmts), []string{"#"}, [][]string{{"", ""}}),
 		},
 	}
 }

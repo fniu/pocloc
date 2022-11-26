@@ -1,8 +1,9 @@
-module github.com/hhatto/gocloc
+module github.com/fniu/pocloc
 
 go 1.12
 
 require (
+	github.com/charmbracelet/lipgloss v0.6.0
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-enry/go-enry/v2 v2.8.0
 	github.com/jessevdk/go-flags v1.4.0
